@@ -18,7 +18,7 @@ def blog_list_view(request):
 
 def blog_detail_view(request, pk):
 
-    post = get_object_or_404(Post, id=pk)
+    post = get_object_or_404(Post, id=pk, status=True, published_datetime__lte=now())
     post.counted_view += 1
     post.save()
 
