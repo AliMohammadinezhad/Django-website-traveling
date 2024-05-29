@@ -75,11 +75,7 @@
               <li><a href="{% url "website:index" %}">Home</a></li>
               <li><a href="{% url "website:about" %}">About</a></li>
               <li class="menu-has-children">
-                <a href="">Blog</a>
-                <ul>
-                  <li><a href="{% url "blog:list_view" %}">Blog Home</a></li>
-                  <li><a href="{% url "blog:detail_view" %}">Blog Single</a></li>
-                </ul>
+                <a href="{% url "blog:list_view" %}">Blog</a>
               </li>
               <li class="menu-has-children">
                 <a href="">Pages</a>
