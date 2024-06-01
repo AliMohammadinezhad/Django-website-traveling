@@ -22,7 +22,7 @@ def blog_detail_view(request, pk):
     post.save()
     
     next_post = queryset.filter(id__gt=post.id).order_by('id').first()   
-    previous_post = queryset.filter(id__lt=post.id).order_by("-id").last()   
+    previous_post = queryset.filter(id__lt=post.id).order_by("id").last()   
     
        
          
