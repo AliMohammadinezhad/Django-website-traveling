@@ -1,5 +1,6 @@
 {% extends '_base.html' %}
 {% load static %}
+{% load blog_tags %}
 
 {% block title %} blog detail {% endblock title %}
 
@@ -231,11 +232,11 @@
 							<div class="widget-wrap">
 								{% include 'blog/blog-search.html' %}
 								{% include 'blog/blog-writer.html' %}
-								{% include 'blog/blog-popular-post.html' %}
+								{% latestposts %}
 								{% include 'blog/blog-ads.html' %}
-								{% include 'blog/blog-category.html' %}
+								{% post_categories %}
 								{% include 'blog/blog-newsletter.html' %}
-								{% include 'blog/blog-tag.html' %}								
+								{% include 'blog/blog-tag.html' %}
 							</div>
 						</div>
 					</div>

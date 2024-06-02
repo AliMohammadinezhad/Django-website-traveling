@@ -1,4 +1,8 @@
-{% extends '_base.html'%} {% load static %} {% block title %} blog home {% endblock title %} {% block content %}
+{% extends '_base.html'%} 
+{% load static %} 
+{% load blog_tags %} 
+{% block title %} blog home {% endblock title %} 
+{% block content %}
 <!-- start banner Area -->
 <section class="banner-area relative blog-home-banner" id="home">
   <div class="overlay overlay-bg"></div>
@@ -101,7 +105,7 @@
             <ul class="tags">
               <li>
                   {% for cat in post.category.all %}
-                   <a> {{ cat.name }} {% if not forloop.last %} , {% endif %} </a>
+                   <a href="{% url 'blog:category' cat_name=cat.name %}"> {{ cat.name }} {% if not forloop.last %} , {% endif %} </a>
                   {% endfor %}
                 </li>
             </ul>
@@ -178,9 +182,9 @@
         <div class="widget-wrap">
           {% include 'blog/blog-search.html' %}
           {% include 'blog/blog-writer.html' %}
-          {% include 'blog/blog-popular-post.html' %}
+          {% latestposts %}
           {% include 'blog/blog-ads.html' %}
-          {% include 'blog/blog-category.html' %}
+          {% post_categories %}
           {% include 'blog/blog-newsletter.html' %}
           {% include 'blog/blog-tag.html' %}
 
