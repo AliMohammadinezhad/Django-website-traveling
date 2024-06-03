@@ -1,6 +1,6 @@
-import datetime
 from django.shortcuts import get_object_or_404, render
 from django.utils.timezone import now
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from .models import Post
 
@@ -10,8 +10,19 @@ def blog_list_view(request, **kwargs):
     posts = Post.objects.filter(status=True)
     posts = posts.filter(published_datetime__lte=now())
 
+    # Filter posts by category
     if kwargs.get("cat_name") != None:
         posts = posts.filter(category__name=kwargs.get("cat_name"))
+        
+    # Paginate posts
+    posts = Paginator(posts, 3)
+    try:
+        page_number = request.GET.get("page")
+        posts = posts.get_page(page_number)
+    except PageNotAnInteger:
+        posts = posts.get_page(1)
+    except EmptyPage:
+        posts = posts.get_page(1)
 
     context = {"posts": posts}
     return render(request, "blog/blog-home.html", context)
