@@ -5,11 +5,14 @@ from django.utils.timezone import now
 from .models import Post
 
 
-def blog_list_view(request):
+def blog_list_view(request, **kwargs):
 
     posts = Post.objects.filter(status=True)
     posts = posts.filter(published_datetime__lte=now())
 
+    if kwargs.get('cat_name') != None :
+        posts = posts.filter(category__name=kwargs.get('cat_name'))
+    
     context = {"posts": posts}
     return render(request, "blog/blog-home.html", context)
 
@@ -29,3 +32,10 @@ def blog_detail_view(request, pk):
 
     context = {"post": post, "next_post": next_post, "previous_post": previous_post}
     return render(request, "blog/blog-single.html", context)
+
+
+def blog_category(request, cat_name):
+    posts = Post.objects.filter(status=True, published_datetime__lte=now())
+    posts = posts.filter(category__name=cat_name)
+    context = {"posts": posts}
+    return render(request, "blog/blog-home.html", context)
