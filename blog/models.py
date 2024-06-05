@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.urls import reverse
 
 
 class Category(models.Model):
@@ -8,7 +8,7 @@ class Category(models.Model):
 
     def __str__(self) -> str:
         return self.name
-    
+
 
 class Post(models.Model):
     image = models.ImageField(upload_to='blog/', default='blog/default.jpg')
@@ -22,12 +22,12 @@ class Post(models.Model):
     published_datetime = models.DateTimeField(null=True)
     created_datetime = models.DateTimeField(auto_now_add=True)
     modified_datetime = models.DateTimeField(auto_now=True)
-    
+
     class Meta:
         ordering = ['-created_datetime']
-        
+
     def __str__(self):
         return self.title
-    
-    
-    
+
+    def get_absolute_url(self):
+        return reverse('blog:detail_view', kwargs={'pk': self.pk})
