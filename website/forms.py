@@ -8,7 +8,7 @@ class ContactForm(forms.ModelForm):
 
     class Meta:
         model = Contact
-        fields = ['name', 'email', 'message']
+        fields = '__all__'
 
 
 class NewsletterForm(forms.ModelForm):
