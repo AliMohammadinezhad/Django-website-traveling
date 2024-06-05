@@ -4,8 +4,6 @@ from .models import Contact, Newsletter
 
 
 class ContactForm(forms.ModelForm):
-    subject = forms.CharField(max_length=255, required=False)
-
     class Meta:
         model = Contact
         fields = '__all__'
