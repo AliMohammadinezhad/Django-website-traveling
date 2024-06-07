@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.utils.timezone import now
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
-from .models import Post
+from .models import Post, Comment
 
 
 def blog_list_view(request, **kwargs):
@@ -40,7 +40,13 @@ def blog_detail_view(request, pk):
     next_post = queryset.filter(id__gt=post.id).order_by("id").first()
     previous_post = queryset.filter(id__lt=post.id).order_by("id").last()
 
-    context = {"post": post, "next_post": next_post, "previous_post": previous_post}
+    comments = Comment.objects.filter(post=post.id, approved=True ).order_by('-created_datetime')
+
+    context = {"post": post,
+               "next_post": next_post,
+               "previous_post": previous_post,
+               "comments": comments
+               }
     return render(request, "blog/blog-single.html", context)
 
 

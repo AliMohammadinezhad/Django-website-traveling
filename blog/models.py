@@ -33,3 +33,17 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('blog:detail_view', kwargs={'pk': self.pk})
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    subject = models.CharField(max_length=255)
+    message = models.TextField()
+    approved = models.BooleanField(default=False)
+    created_datetime = models.DateTimeField(auto_now_add=True)
+    modified_datetime = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.subject
