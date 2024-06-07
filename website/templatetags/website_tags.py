@@ -10,5 +10,5 @@ register = template.Library()
 def website_blog_latest_posts(arg=6):
     posts = Post.objects.filter(status=True, published_datetime__lte=now()).order_by(
         "-published_datetime"
-    )[:arg]
+    ).select_related('author').prefetch_related('category')[:arg]
     return {"posts": posts}

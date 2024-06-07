@@ -40,17 +40,27 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # django inner apps
     'django.contrib.humanize',
     'django.contrib.sites',
     'django.contrib.sitemaps',
 
+    # third-party apps
     'django_extensions',
+    'robots',
+    'debug_toolbar',
 
+    # local apps
     'website.apps.WebsiteConfig',
     'blog.apps.BlogConfig',
 ]
 
+# sites framework
 SITE_ID = 2
+
+# robots
+ROBOTS_USE_HOST = False
+ROBOTS_USE_SITEMAP = False
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -60,6 +70,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -155,3 +166,7 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]

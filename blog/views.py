@@ -6,14 +6,13 @@ from .models import Post
 
 
 def blog_list_view(request, **kwargs):
-
     posts = Post.objects.filter(status=True)
-    posts = posts.filter(published_datetime__lte=now())
+    posts = posts.filter(published_datetime__lte=now()).select_related('author').prefetch_related('category')
 
     # Filter posts by category
-    if kwargs.get("cat_name") != None:
+    if kwargs.get("cat_name"):
         posts = posts.filter(category__name=kwargs.get("cat_name"))
-        
+
     # Paginate posts
     posts = Paginator(posts, 3)
     try:
