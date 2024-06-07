@@ -13,6 +13,9 @@ def blog_list_view(request, **kwargs):
     if kwargs.get("cat_name"):
         posts = posts.filter(category__name=kwargs.get("cat_name"))
 
+    if kwargs.get("tag_name"):
+        posts = posts.filter(tags__name__in=[kwargs.get("tag_name")])
+
     # Paginate posts
     posts = Paginator(posts, 3)
     try:

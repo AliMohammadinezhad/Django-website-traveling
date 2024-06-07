@@ -25,7 +25,6 @@ import debug_toolbar
 from website.sitemaps import StaticViewSitemap
 from blog.sitemaps import BlogSitemap
 
-
 sitemaps = {
     "static": StaticViewSitemap,
     "blog": BlogSitemap,
@@ -45,8 +44,9 @@ urlpatterns = [
         name="django.contrib.sitemaps.views.sitemap",
     ),
     path('robots.txt', include('robots.urls')),
-    path('__debug__/', include(debug_toolbar.urls))
-
+    path('__debug__/', include(debug_toolbar.urls)),
+    path('tinymce/', include('tinymce.urls')),
+    path('captcha/', include('captcha.urls')),
 
 ]
 
