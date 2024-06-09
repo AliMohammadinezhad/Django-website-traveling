@@ -1,7 +1,9 @@
 from django.shortcuts import get_object_or_404, render
 from django.utils.timezone import now
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.contrib import messages
 
+from .forms import CommentForm
 from .models import Post, Comment
 
 
@@ -40,13 +42,23 @@ def blog_detail_view(request, pk):
     next_post = queryset.filter(id__gt=post.id).order_by("id").first()
     previous_post = queryset.filter(id__lt=post.id).order_by("id").last()
 
-    comments = Comment.objects.filter(post=post.id, approved=True ).order_by('-created_datetime')
+    comments = Comment.objects.filter(post=post.id, approved=True).order_by('-created_datetime')
+
+    if request.method == "POST":
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment_form.save()
+            messages.success(request, "your comment has been sent successfully")
+        else:
+            messages.error(request, "your comment has not been sent")
+
+    comment_form = CommentForm()
 
     context = {"post": post,
                "next_post": next_post,
                "previous_post": previous_post,
-               "comments": comments
-               }
+               "comments": comments,
+               "comment_form": comment_form}
     return render(request, "blog/blog-single.html", context)
 
 
