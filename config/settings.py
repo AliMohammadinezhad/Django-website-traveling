@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     # local apps
     'website.apps.WebsiteConfig',
     'blog.apps.BlogConfig',
+    'accounts.apps.AccountsConfig',
 ]
 
 # sites framework

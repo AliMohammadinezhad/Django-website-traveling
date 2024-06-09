@@ -36,6 +36,8 @@ urlpatterns = [
     # app urls
     path('', include('website.urls')),
     path('blog/', include('blog.urls')),
+    path('accounts/', include('accounts.urls')),
+
 
     path(
         "sitemap.xml",
