@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Login</title>
+    <title>Sign Up</title>
     <meta charset="utf-8" />
     <meta
       name="viewport"
@@ -46,10 +46,10 @@
               <div class="login-wrap p-4 p-md-5">
                 <div class="d-flex">
                   <div class="w-100">
-                    <h3 class="mb-4">Sign In</h3>
+                    <h3 class="mb-4">sign up</h3>
                   </div>
                 </div>
-                <form action="{% url 'accounts:login' %}" class="signin-form" method="post">
+                <form action="{% url 'accounts:signup' %}" class="signin-form" method="post">
                     {% csrf_token %}
                   <div class="form-group mt-3">
                     <input type="text" name="username" class="form-control" required />
@@ -62,7 +62,7 @@
                       id="password-field"
                       type="password"
                       class="form-control"
-                      name="password"
+                      name="password1"
                       required
                     />
                     <label class="form-control-placeholder" for="password"
@@ -74,28 +74,32 @@
                     ></span>
                   </div>
                   <div class="form-group">
+                    <input
+                      id="password-field"
+                      type="password"
+                      class="form-control"
+                      name="password2"
+                      required
+                    />
+                    <label class="form-control-placeholder" for="password"
+                      >Password Confirmation</label
+                    >
+                    <span
+                      toggle="#password-field"
+                      class="fa fa-fw fa-eye field-icon toggle-password"
+                    ></span>
+                  </div>
+                  <div class="form-group">
                     <button
                       type="submit"
                       class="form-control btn btn-primary rounded submit px-3"
                     >
-                      Sign In
+                      sign up
                     </button>
-                  </div>
-                  <div class="form-group d-md-flex">
-                    <div class="w-50 text-left">
-                      <label class="checkbox-wrap checkbox-primary mb-0"
-                        >Remember Me
-                        <input type="checkbox" checked />
-                        <span class="checkmark"></span>
-                      </label>
-                    </div>
-                    <div class="w-50 text-md-right">
-                      <a href="#">Forgot Password</a>
-                    </div>
                   </div>
                 </form>
                 <p class="text-center">
-                  Not a member? <a href="{% url 'accounts:signup' %}">Sign Up</a>
+                  Are you a member? <a href="{% url 'accounts:login' %}">Sign In</a>
                 </p>
               </div>
             </div>

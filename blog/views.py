@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.timezone import now
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib import messages
@@ -33,34 +33,46 @@ def blog_list_view(request, **kwargs):
 
 
 def blog_detail_view(request, pk):
-    queryset = Post.objects.filter(status=True, published_datetime__lte=now())
+        queryset = Post.objects.filter(status=True, published_datetime__lte=now())
 
-    post = get_object_or_404(queryset, id=pk)
-    post.counted_view += 1
-    post.save()
+        post = get_object_or_404(queryset, id=pk)
+        post.counted_view += 1
+        post.save()
 
-    next_post = queryset.filter(id__gt=post.id).order_by("id").first()
-    previous_post = queryset.filter(id__lt=post.id).order_by("id").last()
+        next_post = queryset.filter(id__gt=post.id).order_by("id").first()
+        previous_post = queryset.filter(id__lt=post.id).order_by("id").last()
 
-    comments = Comment.objects.filter(post=post.id, approved=True).order_by('-created_datetime')
+        comments = Comment.objects.filter(post=post.id, approved=True).order_by('-created_datetime')
 
-    if request.method == "POST":
-        comment_form = CommentForm(request.POST)
-        if comment_form.is_valid():
-            comment_form.save()
-            messages.success(request, "your comment has been sent successfully")
+        if request.method == "POST":
+            comment_form = CommentForm(request.POST)
+            if comment_form.is_valid():
+                comment_form.save()
+                messages.success(request, "your comment has been sent successfully")
+            else:
+                messages.error(request, "your comment has not been sent")
+
+        comment_form = CommentForm()
+
+
+        context = {"post": post,
+                "next_post": next_post,
+                "previous_post": previous_post,
+                "comments": comments,
+                "comment_form": comment_form}
+        
+        # if post.login_require is True and user is authenticated
+        # show the post
+        
+        # and if user is not authenticated and post.login_require is True
+        # don't show the post
+        
+        if post.login_require == True and request.user.is_authenticated:
+            return render(request, "blog/blog-single.html", context)
+        if post.login_require == False:
+            return render(request, "blog/blog-single.html", context)
         else:
-            messages.error(request, "your comment has not been sent")
-
-    comment_form = CommentForm()
-
-    context = {"post": post,
-               "next_post": next_post,
-               "previous_post": previous_post,
-               "comments": comments,
-               "comment_form": comment_form}
-    return render(request, "blog/blog-single.html", context)
-
+            return redirect("accounts:login")
 
 def blog_search_view(request):
     posts = Post.objects.filter(status=True, published_datetime__lte=now())

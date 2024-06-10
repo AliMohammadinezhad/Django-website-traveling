@@ -21,6 +21,7 @@ class Post(models.Model):
     category = models.ManyToManyField(Category)
     counted_view = models.IntegerField(default=0)
     status = models.BooleanField(default=False)
+    login_require = models.BooleanField(default=False)
     published_datetime = models.DateTimeField(null=True)
     created_datetime = models.DateTimeField(auto_now_add=True)
     modified_datetime = models.DateTimeField(auto_now=True)
