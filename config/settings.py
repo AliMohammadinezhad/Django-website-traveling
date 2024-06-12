@@ -198,3 +198,16 @@ MESSAGE_TAGS = {
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+
+
+
+# custom user
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
+AUTHENTICATION_BACKENDS = (
+    'accounts.backend.EmailOrUsernameModelBackend',
+)
+
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True

@@ -67,9 +67,7 @@ def blog_detail_view(request, pk):
         # and if user is not authenticated and post.login_require is True
         # don't show the post
         
-        if post.login_require == True and request.user.is_authenticated:
-            return render(request, "blog/blog-single.html", context)
-        if post.login_require == False:
+        if post.login_require == True and request.user.is_authenticated or post.login_require == False:
             return render(request, "blog/blog-single.html", context)
         else:
             return redirect("accounts:login")
