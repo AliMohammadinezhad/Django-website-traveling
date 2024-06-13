@@ -61,7 +61,7 @@ INSTALLED_APPS = [
 ]
 
 # sites framework
-SITE_ID = 3
+SITE_ID = 4
 
 # robots
 ROBOTS_USE_HOST = False
@@ -209,5 +209,5 @@ AUTHENTICATION_BACKENDS = (
     'accounts.backend.EmailOrUsernameModelBackend',
 )
 
-
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True

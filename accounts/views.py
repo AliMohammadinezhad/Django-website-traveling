@@ -1,10 +1,22 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login , logout
+from django.contrib.auth import authenticate, login , logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView
+from django.urls import reverse_lazy
+from django.views.generic import FormView
 
 from .forms import CustomUserCreationForm, CustomAuthenticationForm
 
+
+
+class CustomPasswordResetView(PasswordResetView):
+    success_url = reverse_lazy('accounts:password_reset_done')
+
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    success_url = reverse_lazy('accounts:password_reset_complete')
+    
 
 def login_view(request):
     if not request.user.is_authenticated:
@@ -24,12 +36,8 @@ def login_view(request):
                     else:
                         # This part of code means, close session when browser is closed.
                         request.session.set_expiry(0)
-                        messages.success(request, "Login successful")
-                        return redirect('/')
-                else:
-                    messages.error(request, "provided username and password are incorrect")
-            else:
-                messages.error(request, "There is no such user with that username and password")
+                    messages.success(request, "Login successful")
+                    return redirect('/')
         auth_form = CustomAuthenticationForm()
         context = {'auth_form': auth_form}    
         return render(request, 'accounts/login.html', context)
@@ -52,8 +60,7 @@ def signup_view(request):
                 signup_form.save()
                 messages.success(request, "you are Signed Up!")
                 return redirect('accounts:login')
-            else:
-                messages.error(request, "there was an error signing up with your username or password")
+
         signup_form = CustomUserCreationForm()
         context = {'form': signup_form}
         return render(request, 'accounts/signup.html', context)
