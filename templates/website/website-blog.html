@@ -34,7 +34,7 @@
             <a href="{% url 'blog:detail_view' pk=post.id %}"
               ><h4 class="title">{{ post.title }}</h4></a
             >
-            <p>{{ post.content|truncatewords:20 }}</p>
+            <p>{{ post.content|safe|truncatewords:1 }}</p>
             <h6 class="date">{{ post.published_datetime|date:"d M Y" }}</h6>
           </div>
         </div>

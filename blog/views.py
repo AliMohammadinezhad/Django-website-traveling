@@ -45,21 +45,21 @@ def blog_detail_view(request, pk):
         comments = Comment.objects.filter(post=post.id, approved=True).order_by('-created_datetime')
 
         if request.method == "POST":
-            comment_form = CommentForm(request.POST)
-            if comment_form.is_valid():
-                comment_form.save()
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                form.save()
                 messages.success(request, "your comment has been sent successfully")
             else:
                 messages.error(request, "your comment has not been sent")
 
-        comment_form = CommentForm()
+        form = CommentForm()
 
 
         context = {"post": post,
                 "next_post": next_post,
                 "previous_post": previous_post,
                 "comments": comments,
-                "comment_form": comment_form}
+                "form": form}
         
         # if post.login_require is True and user is authenticated
         # show the post

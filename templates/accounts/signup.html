@@ -1,7 +1,7 @@
-{% extends 'base_accounts' %}
+{% extends 'base_accounts.html' %}
 
 
-
+{% block content %}
 <div class="login-wrap p-4 p-md-5">
                 <div class="d-flex">
                   <div class="w-100">
@@ -68,4 +68,4 @@
                   Are you a member? <a href="{% url 'accounts:login' %}">Sign In</a>
                 </p>
               </div>
-            
+{% endblock content %}            

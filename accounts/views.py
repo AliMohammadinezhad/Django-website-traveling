@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login , logout, update_session_auth_hash
+from django.contrib.auth import authenticate, login , logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView
 from django.urls import reverse_lazy
-from django.views.generic import FormView
 
 from .forms import CustomUserCreationForm, CustomAuthenticationForm
 
@@ -21,11 +20,11 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
 def login_view(request):
     if not request.user.is_authenticated:
         if request.method == 'POST':
-            auth_form = CustomAuthenticationForm(request=request, data=request.POST)
-            if auth_form.is_valid():
-                user_input = auth_form.cleaned_data.get('username')
-                password = auth_form.cleaned_data.get('password')
-                remember_me = auth_form.cleaned_data.get('remember_me')
+            form = CustomAuthenticationForm(request=request, data=request.POST)
+            if form.is_valid():
+                user_input = form.cleaned_data.get('username')
+                password = form.cleaned_data.get('password')
+                remember_me = form.cleaned_data.get('remember_me')
                 user = authenticate(request, username=user_input, password=password)
                 if user is not None:
                     login(request, user)
@@ -38,8 +37,8 @@ def login_view(request):
                         request.session.set_expiry(0)
                     messages.success(request, "Login successful")
                     return redirect('/')
-        auth_form = CustomAuthenticationForm()
-        context = {'auth_form': auth_form}    
+        form = CustomAuthenticationForm()
+        context = {'form': form}    
         return render(request, 'accounts/login.html', context)
     else: 
         return redirect('/')
@@ -55,14 +54,14 @@ def logout_view(request):
 def signup_view(request):
     if not request.user.is_authenticated:
         if request.method == 'POST':
-            signup_form = CustomUserCreationForm(request.POST)
-            if signup_form.is_valid():
-                signup_form.save()
+            form = CustomUserCreationForm(request.POST)
+            if form.is_valid():
+                form.save()
                 messages.success(request, "you are Signed Up!")
                 return redirect('accounts:login')
 
-        signup_form = CustomUserCreationForm()
-        context = {'form': signup_form}
+        form = CustomUserCreationForm()
+        context = {'form': form}
         return render(request, 'accounts/signup.html', context)
     else:
         return redirect("/")
