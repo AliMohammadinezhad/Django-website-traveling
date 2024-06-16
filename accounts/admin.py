@@ -23,7 +23,7 @@ class CustomUserAdmin(UserAdmin):
             "classes": ("wide",),
             "fields": (
                 "username", "email", "password1", "password2", "is_staff",
-                "is_active", "groups", "user_permissions"
+                "is_active", "groups", "user_permissions", "token_used"
             )}
         ),
     )

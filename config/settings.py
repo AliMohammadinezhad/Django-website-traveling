@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+from datetime import timedelta
 import os
 from pathlib import Path
 from django.contrib.messages import constants as messages
@@ -209,5 +210,14 @@ AUTHENTICATION_BACKENDS = (
     'accounts.backend.EmailOrUsernameModelBackend',
 )
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+PASSWORD_RESET_TIMEOUT = 3
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'alimn1382@gmail.com'
+EMAIL_HOST_PASSWORD = 'hubfeiipxpilndvl'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True

@@ -5,8 +5,9 @@ from django.contrib import messages
 from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView
 from django.urls import reverse_lazy
 
-from .forms import CustomUserCreationForm, CustomAuthenticationForm
 
+
+from .forms import CustomUserCreationForm, CustomAuthenticationForm
 
 
 class CustomPasswordResetView(PasswordResetView):
@@ -16,7 +17,6 @@ class CustomPasswordResetView(PasswordResetView):
 class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     success_url = reverse_lazy('accounts:password_reset_complete')
     
-
 def login_view(request):
     if not request.user.is_authenticated:
         if request.method == 'POST':
@@ -37,6 +37,8 @@ def login_view(request):
                         request.session.set_expiry(0)
                     messages.success(request, "Login successful")
                     return redirect('/')
+            else:
+                messages.error(request, "Invalid username or password")
         form = CustomAuthenticationForm()
         context = {'form': form}    
         return render(request, 'accounts/login.html', context)
