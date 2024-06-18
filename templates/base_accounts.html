@@ -48,6 +48,7 @@
                 style="background-image: url({% static 'img/bg-1.jpg' %})"
               ></div>
               {% block content %}
+
               {% if form.errors %}
               {% for field in form %}
         
@@ -61,7 +62,7 @@
                    {% endfor %}
         
               {% endfor %}
-        {% endif %}
+                {% endif %}
                 {% endblock content %}
             
               </div>

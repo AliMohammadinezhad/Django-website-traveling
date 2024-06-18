@@ -17,6 +17,7 @@ class CustomPasswordResetView(PasswordResetView):
 class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     success_url = reverse_lazy('accounts:password_reset_complete')
     
+    
 def login_view(request):
     if not request.user.is_authenticated:
         if request.method == 'POST':
